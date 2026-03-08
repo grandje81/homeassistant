@@ -12,4 +12,6 @@ To start off a smooth ride in this setup, make sure to have the software listed 
    -  virtinst
    -  bridge-utils
 - Home Assistant QCOW2 disk image
-  - https://github.com/home-assistant/operating-system/releases/download/17.1/haos_generic-aarch64-17.1.qcow2.xz
+   - https://github.com/home-assistant/operating-system/releases/download/17.1/haos_generic-aarch64-17.1.qcow2.xz
+   - Newer or older version of Home Assistant is available under this URL:
+      - https://github.com/home-assistant/operating-system/releases/tag/
