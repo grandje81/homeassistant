@@ -18,5 +18,5 @@ Documentation for setting up homeassistant on SBC (rPi 5) and KVM
    -  libvirt-clients
    -  virtinst
    -  bridge-utils
-- Home Assistant kvm
+- Home Assistant QCOW2 disk image
   - https://github.com/home-assistant/operating-system/releases/download/17.1/haos_generic-aarch64-17.1.qcow2.xz
