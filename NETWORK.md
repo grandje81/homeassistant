@@ -30,6 +30,26 @@ network:
             forward-delay: 4
 ```
 
+If unsure about the outcome you can let netplan test the config first
+
+```
+sudo netplan --debug generate
+```
+
+If no issues were found, apply the config
+```
+sudo netplan apply
+```
+
+Check the network status
+
+```
+ip a show br0
+ip route
+```
+
+And ping a suitable IP, for example your gateway on the specified vlan.
+
 ## KVM Network configuration
 For adding the bridge created above we need to create an XML file that virsh can read.
 
@@ -48,5 +68,11 @@ For adding the bridge created above we need to create an XML file that virsh can
 When its done add it to KVM with below command
 
 ```
-virsh net-define br101.xml
+sudo virsh net-define br101.xml
+```
+
+If everything went well, start it and set it to autostart.
+```
+sudo virsh net-start br101
+sudo virsh net-autostart br101
 ```
