@@ -1,13 +1,47 @@
-sudo virsh net-start default
-sudo virsh net-autostart default
+# Installing the disk image
 
-wget https://github.com/home-assistant/operating-system/releases/download/16.2/haos_generic-aarch64-16.2.qcow2.xz
-unxz haos_generic-aarch64-16.2.qcow2.xz  
+If the storage and network is already set its time to create the virtual machine and link the the disk image.
 
-sudo qemu-img resize haos_generic-aarch64-16.2.qcow2 +32G
-sudo virt-install --name haos --description "Home Assistant OS" --os-variant=generic --ram=6144 --vcpus=2 --disk haos_generic-aarch64-16.2.qcow2,bus=scsi --controller type=scsi,model=virtio-scsi --import --graphics none --boot uefi \
+```
+sudo virt-install --name haos --description "Home Assistant OS" --os-variant=generic --ram=8192 --vcpus=2 --disk haos_generic-aarch64-17.1.qcow2,bus=scsi --controller type=scsi,model=virtio-scsi --import --graphics none \
              --noautoconsole \
-             --network network=default,model=virtio,mac=52:54:00:fa:72:01  \
-             --network direct,source=eth0,source_mode=bridge,model=virtio,mac=52:54:00:4a:19:02  \
-			 --boot uefi,firmware.feature0.name=enrolled-keys,firmware.feature0.enabled=no,firmware.feature1.name=secure-boot,firmware.feature1.enabled=no
+             --network network=br101,model=virtio,mac=52:54:00:fa:72:01  \
+             --boot uefi,firmware.feature0.name=enrolled-keys,firmware.feature0.enabled=no,firmware.feature1.name=secure-boot,firmware.feature1.enabled=no
+```
+
+Set the image to autostart with OS
+```
 sudo virsh autostart haos
+```
+
+## Attach USB device
+
+To attach USB device directly from HOST to VM you need to specify vendorid and productid on the specific USB to make it work.
+The specification is saved in an XML file.
+
+To find out the information needed, issue below command
+```
+lsusb
+```
+
+If you want vendorid and productid separated use below command
+```
+lsusb -v | grep 'id'
+```
+
+When you have found your device create an XML file like the one below
+
+```
+<hostdev mode='subsystem' type='usb' managed='yes'>
+        <source>
+                <vendor id='0x10c4' />
+                <product id='0xea60' />
+        </source>
+</hostdev>
+```
+
+Then issue below command to attach
+
+```
+virsh attach-device haos --file /var/lib/libvirt/images/hassos-vm/myUSBDevice.xml --persistent
+```
