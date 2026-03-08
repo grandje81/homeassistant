@@ -11,17 +11,25 @@ To start off a smooth ride in this setup, make sure to have the software listed 
    -  libvirt-clients
    -  virtinst
    -  bridge-utils
+   -  ovmf
 - Home Assistant QCOW2 disk image
    - https://github.com/home-assistant/operating-system/releases/download/17.1/haos_generic-aarch64-17.1.qcow2.xz
    - Newer or older version of Home Assistant is available under this URL:
       - https://github.com/home-assistant/operating-system/releases/tag/
 
+## Make sure system is up to date
+
+Issue update and upgrade command
+
+```
+sudo apt-get update && sudo apt-get upgrade -y
+```
+
 ## Configure user accounts
 Add the user that will be adding VMs to groups libvirt and kvm
 
 ```
-sudo usermod -aG libvirt $USER
-sudo usermod -aG kvm $USER
+sudo usermod -aG libvirt,kvm $USER
 ```
 Where **$USER** is the logged in user.
 
@@ -46,6 +54,12 @@ Make directory in the proper place and change **pwd**, then download the disk im
 ```
 sudo mkdir -vp /var/lib/libvirt/images/hassos-vm && cd /var/lib/libvirt/images/hassos-vm
 sudo wget https://github.com/home-assistant/operating-system/releases/download/17.1/haos_generic-aarch64-17.1.qcow2.xz
+```
+
+Unpack the disk image
+
+```
+unxz haos_generic-aarch64-17.1.qcow2.xz
 ```
 
 Now you start with storage configuration
