@@ -42,10 +42,14 @@ sudo netplan apply
 ```
 
 Check the network status
-
 ```
 ip a show br0
 ip route
+```
+
+Check the bridge status
+```
+brctl show
 ```
 
 And ping a suitable IP, for example your gateway on the specified vlan.
