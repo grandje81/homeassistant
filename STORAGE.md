@@ -23,5 +23,5 @@ sudo chmod 0644 haos_ova-16.2.qcow2
 To add some storage before starting the Home Assistant KVM, issue below command to add 32GB
 
 ```
-sudo qemu-img resize haos_generic-aarch64-17.1.qcow2.xz +32G
+sudo qemu-img resize haos_generic-aarch64-17.1.qcow2 +32G
 ```
