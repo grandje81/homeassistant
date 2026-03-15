@@ -8,6 +8,9 @@ sudo virt-install --name haos --description "Home Assistant OS" --os-variant=gen
              --network network=br101,model=virtio,mac=52:54:00:fa:72:01  \
              --boot uefi,firmware.feature0.name=enrolled-keys,firmware.feature0.enabled=no,firmware.feature1.name=secure-boot,firmware.feature1.enabled=no
 ```
+The important thing here is to make surr you didnt copy the MAC from the actual bridge interface of the host machine.
+
+**Make it unique**
 
 Set the image to autostart with OS
 ```
@@ -44,4 +47,19 @@ Then issue below command to attach
 
 ```
 virsh attach-device haos --file /var/lib/libvirt/images/hassos-vm/myUSBDevice.xml --persistent
+```
+
+If you have two USB-devices from the same Vendor and its the same product you need to specify the bus number and device number instead of vendorid/productid
+
+```
+<hostdev mode='subsystem' type='usb' managed='yes'>
+      <source>
+        <address bus='3' device='2'/>
+      </source
+</hostdev>
+<hostdev mode='subsystem' type='usb' managed='yes'>
+      <source>
+        <address bus='2' device='5'/>
+      </source>
+</hostdev>
 ```
