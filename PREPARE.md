@@ -23,7 +23,7 @@ With the rPi 4 i got some issues with qemu-system-arm installation. It was block
 
 The package for ACL needed libacl1 in a specific build but the install wanted to install the newest version
 - Required: libacl1-2.3.2-1build1
-- Blocked by: libaxl1-2.3.2-1build1.1
+- Blocked by: libacl1-2.3.2-1build1.1
 
 Solution was to make apt-get install the required version at the same time as the main package.
 
