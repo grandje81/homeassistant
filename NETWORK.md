@@ -22,8 +22,8 @@ network:
   bridges:
       br101:
           interfaces: [ vlan50 ]
-          dhcp4: yes
-          dhcp6: no
+          dhcp4: true
+          dhcp6: false
           link-local: [ ]
           parameters:
             stp: true
@@ -57,6 +57,8 @@ And ping a suitable IP, for example your gateway on the specified vlan.
 ## KVM Network configuration
 For adding the bridge created above we need to create an XML file that virsh can read.
 
+A couple of examples i found have defined the xml as below.
+
 ```
 <interface type='bridge' name='br101'>
   <mtu size='1500'/>
@@ -68,6 +70,15 @@ For adding the bridge created above we need to create an XML file that virsh can
   </bridge>
 </interface>
 ```
+The above wont work for us, and we need to make some changes and remove some lines.
+
+```
+<network>
+    <name>host-bridge</name>
+    <forward mode="bridge"/>
+    <bridge name="br101"/>
+</network>
+```
 
 When its done add it to KVM with below command
 
@@ -76,7 +87,8 @@ sudo virsh net-define br101.xml
 ```
 
 If everything went well, start it and set it to autostart.
+
 ```
-sudo virsh net-start br101
-sudo virsh net-autostart br101
+sudo virsh net-start host-bridge
+sudo virsh net-autostart host-bridge
 ```
