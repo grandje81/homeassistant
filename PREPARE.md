@@ -4,9 +4,9 @@ To start off a smooth ride in this setup, make sure to have the software listed 
 
 ## Software used in this setup
 
-- Ubuntu Server 24.04.03 LTS
+- Ubuntu Server 24.04.03 LTS for ARM64
 - Debian/Ubuntu specific packages for virtualization
-   -  qemu-kvm
+   -  qemu-system-arm
    -  libvirt-daemon-system
    -  libvirt-clients
    -  virtinst
@@ -16,6 +16,20 @@ To start off a smooth ride in this setup, make sure to have the software listed 
    - https://github.com/home-assistant/operating-system/releases/download/17.1/haos_generic-aarch64-17.1.qcow2.xz
    - Newer or older version of Home Assistant is available under this URL:
       - https://github.com/home-assistant/operating-system/releases/tag/
+
+## Troubleshooting package install
+
+With the rPi 4 i got some issues with qemu-system-arm installation. It was blocked because problems with package dependency could not be fulfilled.
+
+The package for ACL needed libacl1 in a specific build but the install wanted to install the newest version
+- Required: libacl1-2.3.2-1build1
+- Blocked by: libaxl1-2.3.2-1build1.1
+
+Solution was to make apt-get install the required version at the same time as the main package.
+
+```
+ sudo apt-get install acl libacl1=2.3.2-1build1
+```
 
 ## Make sure system is up to date
 
