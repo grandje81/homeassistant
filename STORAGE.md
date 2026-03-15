@@ -15,8 +15,8 @@ virsh pool-create-as --name my-storage-pool --type dir --target /var/lib/libvirt
 Making sure everything is accessable by the right group and the right rights is applied, issue below command
 
 ```
-sudo chown libvirt-qemu:kvm haos_ova-16.2.qcow2
-sudo chmod 0644 haos_ova-16.2.qcow2
+sudo chown libvirt-qemu:kvm haos_generic-aarch64-17.1.qcow2
+sudo chmod 0644 haos_generic-aarch64-17.1.qcow2.xz
 ```
 ## Adding extra storage to Home Assistant disk image
 
